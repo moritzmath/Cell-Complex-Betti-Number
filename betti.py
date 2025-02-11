@@ -71,7 +71,7 @@ def _compute_bakry_emery_edges(G: nx.Graph, edge_weight='weight', vertex_weight=
         vertex_weight (str, optional): The vertex weight used for the computations. (Defualt = 'weight')
 
     Returns:
-        dict: Dictionary of Bakry-Émery curvatures
+        dict: Dictionary containing the Bakry-Émery curvature of the graph
     """
 
     # Adjacency matrix
@@ -247,6 +247,11 @@ class CellComplex:
     
     
     def bakry_emery_curvature(self):
+        """Compute the Bakry-Émery curvature of the graph
+
+        Returns:
+            dict: Dictionary containing the Bakry-Émery curvature of the graph
+        """
         be_curv = _compute_bakry_emery_edges(G=self.G, edge_weight=self.edge_weight, vertex_weight=self.vertex_weight)
         return be_curv
             
