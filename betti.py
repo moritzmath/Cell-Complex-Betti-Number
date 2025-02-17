@@ -106,13 +106,14 @@ def _compute_bakry_emery_edges(G: nx.Graph, edge_weight='weight', vertex_weight=
 
     return be_curv
 
+
 class CellComplex:
 
     """
     A class to compute the first Betti number of a cell complex, arising from a weighted graph by gluing 2-cells to all cycles of length at most five.
     """
 
-    def __init__(self, G: nx.Graph, edge_weight='weight', vertex_weight='weight'):
+    def __init__(self, G: nx.Graph, edge_weight='weight', vertex_weight='weight', init_two_cells=True):
         """
         Initialize the CW-complex from a given weighted graph.
 
@@ -120,15 +121,18 @@ class CellComplex:
         graph (nx.Graph): A NetworkX graph representing the 1-skeleton of the CW-complex.
         edge_weight (str, optional): The edge weight used for the computations. (Default = 'weight')
         vertex_weight (str, optional): The vertex weight used for the computations. (Defualt = 'weight')
+        init_two_cells (bool, optional): Boolean value indicating whether two cells are initialized.
         """
 
         self.G = nx.relabel_nodes(G, {node: i for i, node in enumerate(G.nodes())})
         self.X0 = list(self.G.nodes)
         self.X1 = list(self.G.edges)
-        self.X2 = self._initialize_two_cells()
         self.edge_weight = edge_weight
         self.vertex_weight = vertex_weight
+        self.init_two_cells = init_two_cells
 
+        if init_two_cells:
+            self.X2 = self._initialize_two_cells()
         self._initialize_weights()
 
     def _initialize_two_cells(self):
@@ -232,7 +236,10 @@ class CellComplex:
         Returns:
         np.ndarray: A matrix representing the Hodge-Laplacian operator
         """
-        return self._delta1() @ self._delta1_star() + self._delta2_star() @ self._delta2()
+        if self.init_two_cells:
+            return self._delta1() @ self._delta1_star() + self._delta2_star() @ self._delta2()
+        else:
+            raise ValueError(f"Init_two_cells must be True for this function")
     
     def betti_num(self):
         """
@@ -241,7 +248,11 @@ class CellComplex:
         Returns:
             int: Betti-number
         """
-        rank = np.linalg.matrix_rank(self.hodge_laplacian())
+
+        if self.init_two_cells:
+            rank = np.linalg.matrix_rank(self.hodge_laplacian())
+        else:
+            raise ValueError(f"Init_two_cells must be True for this function")
          
         return len(self.X1) - rank
     
