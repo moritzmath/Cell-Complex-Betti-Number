@@ -9,3 +9,13 @@ To use this library, make sure you have the following packages installed:
 * [NetworkX](https://networkx.org)
 * [Numpy](https://numpy.org)
 
+## Cite
+If you use this code in your research, please considering cite our paper:
+```
+@misc{hehl2025bettinumberestimatesnonnegatively,
+      title={Betti number estimates for non-negatively curved graphs}, 
+      author={Moritz Hehl and Florentin Münch},
+      year={2025},
+      eprint={2503.11222},
+      url={https://arxiv.org/abs/2503.11222}, 
+}
