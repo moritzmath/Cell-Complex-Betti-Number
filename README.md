@@ -10,7 +10,7 @@ To use this library, make sure you have the following packages installed:
 * [Numpy](https://numpy.org)
 
 ## Cite
-If you use this code in your research, please considering cite our paper:
+If you use this code in your research, please consider citing our paper:
 ```
 @misc{hehl2025bettinumberestimatesnonnegatively,
       title={Betti number estimates for non-negatively curved graphs}, 
